@@ -9,7 +9,9 @@ cep.addEventListener("keyup", function (event) {
 });
 
 function autoComplete(cep) {
-  let url = `http://localhost:8080/cep/${cep}`;
+  let url = `https://webmaniabr.com/api/1/cep/${cep}/?app_key=QpgzByU0G8bRalamUzgxmwk92BUc9sa3&app_secret=yoXv0oOpAEgFT0qDL4waWTA4P0lrAIWBXktLoZrC4AK6g69m`;
+
+
 
   fetch(url).then(function (response) {
     if (response.ok) {
