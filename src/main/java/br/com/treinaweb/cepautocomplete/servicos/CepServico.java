@@ -15,5 +15,11 @@ public class CepServico {
         return response;
     }
 
+    public boolean validar (String cep){
+
+        WebManiaResponse response = consultar(cep);
+
+        return response.getCep() != null;
+    }
 
 }

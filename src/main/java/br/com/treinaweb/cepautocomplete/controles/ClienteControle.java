@@ -3,14 +3,13 @@ package br.com.treinaweb.cepautocomplete.controles;
 import javax.validation.Valid;
 
 import br.com.treinaweb.cepautocomplete.servicos.CepServico;
+import br.com.treinaweb.cepautocomplete.validadores.ClienteValidador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.treinaweb.cepautocomplete.entidades.Cliente;
@@ -25,6 +24,11 @@ public class ClienteControle {
 
     @Autowired
     private CepServico cepServico;
+
+    @InitBinder(value = "cliente")
+    public void initBinder (WebDataBinder binder){
+        binder.addValidators(new ClienteValidador(cepServico));
+    }
 
     @GetMapping
     public ModelAndView listar() {
@@ -49,8 +53,6 @@ public class ClienteControle {
         if (resultado.hasErrors()) {
             return "cliente/formulario.html";
         }
-
-        System.out.println(cepServico.consultar(cliente.getCep()));
 
         clienteServico.cadastrar(cliente);
 
